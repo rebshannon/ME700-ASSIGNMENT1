@@ -17,7 +17,7 @@ def nIterMaxCheck(nIterMax: float):
     if nIterMax <= 0 or nIterMax.is_integer()==False:
         print("FAIL: maximum number of iterations must be a postivie whole number.")
         print("Change nIterMax to try again.")
-        print("Exiting")
+        return "Exiting"
         exit()
     else: return "PASS: nIterMax is positive whole number"
 
@@ -28,7 +28,7 @@ def A_B_signCheck(fA: float, fB: float):
         print("f(A) = ",fA)
         print("f(B) = ",fB)
         print("Change inputs A and B")
-        print("Exiting")
+        return "Exiting"
         exit()
     else: return "PASS: f(A) and f(B) have opposite signs"
 
@@ -44,6 +44,7 @@ def checkTol(fC: float, tol: float, C: float, nIter: float):
         print("Root found in ", nIter, " iterations")
         print("C =", C)
         print("f(C) = ", fC)
+        return "Solution found"
         exit()  
 
 def reassignC(fA: float, fB: float, fC: float, A: float, B: float,C: float) -> float:
@@ -62,44 +63,4 @@ def maxIterReached(nIterMax: float, nIter: float, C: float):
         print("ERROR: Max number of iteractions exceeded.")
         print("Last value found: C = ",C)
         print("Increase nIterMax or decrease tol")
-        print("Exiting")
-
-
-def bisectionMethod(A: float, B: float, nIterMax: float = 100, tol:float = 10**-9):
-    """Run bisection method solver"""
-    
-    '''
-    Check for valid inputs
-    '''
-
-    nIterMaxCheck(nIterMax)
-    A_lessThan_B(A,B)
-
-    fA = exSoln.exFn(A)
-    fB = exSoln.exFn(B)
-    A_B_signCheck(fA,fB)
-
-
-    '''
-    Bisection method loop
-    '''
-
-    for nIter in range(1, nIterMax+1):
-    
-        # find midpoint
-        C = midpoint_A_B(A, B)
-        fC = exSoln.exFn(C)
-
-        # if within tolerance, read final answer and exit
-        checkTol(fC,tol, C, nIter)
-
-        # if not within tolerance, reassign C and start again
-        A,B = reassignC(fA,fB,fC,A,B,C)
-
-        # exit if this is the last loop
-        maxIterReached(nIterMax, nIter, C)
-
-        # increment iteration counter
-        nIter += 1
-
-        
+        return "Exiting"

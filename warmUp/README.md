@@ -2,8 +2,7 @@
 # ME700 Assignment 1
 
 Rebecca Shannon  
-1/29/2025  
-Python 3.12.8
+2/3/2025  
 
 ## About the Solver
 
@@ -11,47 +10,60 @@ Uses the bisection method to find the root $(x = C)$ of a provided function $f(x
 
 ## Definitions
 
-$A$: initial guess, lower bound  
-$B$: initial guess, upper bound  
-$C$: midpoint of $A$ and $B$; solution  
-$nIterMax$: maximum number of iterations for the solver  
-$tol$: desired tolerance level
+__Variables__  
+`A`: initial guess, lower bound  
+`B`: initial guess, upper bound  
+`C`: midpoint of $A$ and $B$; solution  
+`nIterMax`: maximum number of iterations for the solver  
+`tol`: desired tolerance level
 
+__Files__  
+All are **.py* files  
 *bisectionMethod*: user inputs defined here; solver is run from this script  
-*fnAssignment1*: Python functions associated with *bisectionMethod*  
-*exampleSolutions*: defines the fuction that will be solved with *bisectionMethod*  
-*test_pytest.py*: tests for *fnAssignment1* functions (Only functions that return values are tested. Functions that test/verify values return a PASS/FAIL output when *bisectionMethod* is run.)
+*fnAssignment1*: Python functions associated with *bisectionMethod.py*  
+*exampleSolutions*: defines the fuction that will be solved with *bisectionMethod.py*  
+*test_pytest.py*: tests for *fnAssignment1.py* functions
 
 ## Using the code
 
-In the *bisectionMethod.py* script, four user inputs are required: two initial guesses $(A$ and $B)$, the maximum number of iterations $(nIterMax)$, and the desired tolerance level $(tol)$. Three conditions must be met for the user inputs:
-
-1. $A < B$
-2. $sign[f(A)] \neq sign[f(B)]$
-3. $nIterMax$ must be a positive whole number
-
-The function $f(x)$ that is being solved should be defined in a separate Python script and imported as *exSoln*. The solutions to these examples are currently held in *exampleSolutions.py*. All constants needed for the desired function should also be defined here. In this script,  uncomment the function associated with the example problem that you are atttempting. When moving on to another example, make sure to comment out the old example function (e.g. only one function in *exampleSolutions.py* should be uncommented at a time).
-
-To test the functions, run the `pytest <workdir>` command in the terminal. Note `\<workDir\>` indicates the directory in which the assignment is stored.
-
-First, set up the environment and activate it. 
-
-```bash
-conda create --name A1-bisectionMethod-env python=3.12
-conda activate A1-bisectionMethod-env
-```
-
-Confirm that the right version of python is installed (3.12) and that the most up to date version of setuptools is being used in pip.
+### Initial Setup
+Set up the conda environment and test that the code is functioning.  
+1. Create a new conda environment and activate it.  
+```bash 
+conda create --name A1-bisection-method-env python=3.12
+conda activate A1-bisection-method-env
+``` 
+2. Confirm that the right version of Python and pip setuptools are being used. Python should be version 3.12; the second command will update setuptools if necessary.  
 ```bash
 python --version
 pip install --upgrade pip setuptools wheel
 ```
-"Create an editable install of the bisection method code (you must be in the correct directory)."
-```\bash
+3. Navigate to the warmUp directory.  
+4. Install an editable version of the code. Note that the *pyproject.toml* file is required for this.  
+```bash
 pip install -e .
 ```
+5. Test the code with pytest. This command returns code coverage for all files in the directory. Coverage for *warmUp/fnAssignment1.py* should be 100% and all tests should pass.  
+```bash
+pytest -v --cov=warmUp  --cov-report term-missing
+```
+### Running Examples
+Instructions on how to run the example cases. Two files should be modified: *exampleSolutions.py* and *bisectionMethod.py*. 
 
-Run pytest to test the code. T
+In *exampleSolutions.py*, there are five functions defined, all of which are called `exfn`, so only one can be uncommented at a time. Select the example that you would like to complete and uncomment it (from the line starting with `def` to the line starting with `return`). Make sure all other functions are comments.
+
+
+In *bisectionMethod.py*, four user inputs are required: two initial guesses (`A` and `B`), the maximum number of iterations (`nIterMax`), and the desired tolerance level (`tol`). Three conditions must be met for the user inputs:
+
+1. `A` < `B`
+2. `sign[f(A)]` $\neq$ `sign[f(B)]`
+3. `nIterMax` must be a positive whole number
+
+Enter these four values in the **USER INPUTS** section. Run the *bisectionMethod.py* Python file to run the example. Results will be printed to the terminal.
+
+### Running New Cases
+
+This script can also use used for other user defined functions. This can be done by adding functions to the *exampleSolutions.py* file. Each function should be called `exFn` to be compatible with the *bisectionmethod* script. Additionally, the function should only take one input and return one value.
 
 
 ## Examples
