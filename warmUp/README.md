@@ -1,5 +1,5 @@
 
-# ME700 Assignment 1
+# ME700 Assignment 1 Warm Up
 
 Rebecca Shannon  
 2/3/2025  
