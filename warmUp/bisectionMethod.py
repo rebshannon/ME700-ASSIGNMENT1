@@ -3,7 +3,7 @@
 # Bisectional method code, assignment 1 warm up ME 700
 
 import numpy as np
-import fnAssignment1 as fnA1 
+import src.fnAssignment1 as fnA1 
 import exampleSolutions as exSoln
 
 
