@@ -1,1 +1,1 @@
-For bisection method homework, see warmUp directory.
+For bisection method homework, use the warmUp directory.
