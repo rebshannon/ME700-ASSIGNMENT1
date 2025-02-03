@@ -31,11 +31,15 @@ Set up the conda environment and test that the code is functioning.
 1. Create a new conda environment and activate it.  
 ```bash 
 conda create --name A1-bisection-method-env python=3.12
+```
+```bash
 conda activate A1-bisection-method-env
 ``` 
 2. Confirm that the right version of Python and pip setuptools are being used. Python should be version 3.12; the second command will update setuptools if necessary.  
 ```bash
 python --version
+```
+```bash
 pip install --upgrade pip setuptools wheel
 ```
 3. Navigate to the warmUp directory.  
