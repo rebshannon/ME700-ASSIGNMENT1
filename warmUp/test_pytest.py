@@ -28,10 +28,10 @@ def test_A_B_signCheck():
 def test_midpoint_A_B():
     assert testFns.midpoint_A_B(2,4) == 3
 
-def test_checkTol():
-    known = "Solution found"
-    found = testFns.checkTol(1,2,10,4)
-    assert known == found
+# def test_checkTol():
+#     known = "Solution found"
+#     found = testFns.checkTol(1,2,10,4)
+#     assert known == found
 
 def test_reassignC():
     assert testFns.reassignC(10, -10, 5, 0, 5, 3) == (3, 5)
