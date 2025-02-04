@@ -7,18 +7,17 @@ import scipy as sp
 
 # USER INPUTS
 
-x = 100
+x = np.array([1,2])
 tol = 1e-9
 maxIter = 1
 nIter = 0
-# function residual
-# function Jacobian
+
 
 # FUNCTIONS
 
-def calc_resid(x:float) -> float:
-    val = x**3 + 2*x**2 + 2
-    return val
+def calc_resid(x):
+    R = ([2,1])
+    return R
 
 def calc_jacobian(x:float) -> float:
     val = 3*x**2 +4*x
@@ -43,33 +42,33 @@ def nIterMaxCheck(nIterMax: float):
     else: return "PASS: nIterMax is positive whole number"
 
 # CHECK INPUTS
-nIterMaxCheck(maxIter)
+# nIterMaxCheck(maxIter)
 
-# FIRST LOOP
-# calc R(x0) and J(0)
-R = calc_resid(x)
-J = calc_jacobian(x)
+# # FIRST LOOP
+# # calc R(x0) and J(0)
+# R = calc_resid(x)
+# J = calc_jacobian(x)
 
-# calc inverse of Jacobian
-dJ = 1/J
-print(dJ)
+# # calc inverse of Jacobian
+# dJ = 1/J
+# print(dJ)
 
-# ACTUAL LOOP
+# # ACTUAL LOOP
 
-while np.abs(R) > tol:
-    x = x - dJ*R 
+# while np.abs(R) > tol:
+#     x = x - dJ*R 
 
-    # calc R(x0) and J(0)
-    R = calc_resid(x)
-    J = calc_jacobian(x)
+#     # calc R(x0) and J(0)
+#     R = calc_resid(x)
+#     J = calc_jacobian(x)
 
-    # calc inverse of Jacobian
-    dJ = 1/J
+#     # calc inverse of Jacobian
+#     dJ = 1/J
 
-    nIter =+ 1
-    maxIterReached(maxIter,nIter)
+#     nIter =+ 1
+#     maxIterReached(maxIter,nIter)
 
-print(x)
-print(R)
+# print(x)
+# print(R)
 
 

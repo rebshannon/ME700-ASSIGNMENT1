@@ -7,8 +7,8 @@ import src.newtonMethod as newt
  
 
 def test_calc_resid():
-    known = 98
-    found = newt.calc_resid(4)
+    known = np.array([5,18])
+    found = newt.calc_resid([1,2])
     assert known == found
 
 def test_calc_jacobian():
