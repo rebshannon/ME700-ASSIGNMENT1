@@ -17,4 +17,4 @@ def R(x):
 # initial guess
 
 # call newton's method
-reult = 
+#reult = 

@@ -1,4 +1,4 @@
-import fnAssignment1 as testFns
+import src.bisectionMethodFns as testFns
 
 
 def test_A_lessThan_B():

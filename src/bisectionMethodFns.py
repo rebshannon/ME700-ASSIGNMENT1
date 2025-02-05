@@ -3,7 +3,7 @@
 # Rebecca Shannon 1/25/25
 
 import numpy as np
-import exampleSolutions as exSoln
+import tutorials.bisectionMethod_exampleSolutions as exSoln
 
 def A_lessThan_B(A: float, B: float):
     """Given A and B, check if A < B"""
