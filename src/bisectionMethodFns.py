@@ -46,7 +46,7 @@ def checkTol(fC: float, tol: float, C: float, nIter: float):
         print("C =", C)
         print("f(C) = ", fC)
         exit()
-        return "Solution found"
+    return C
           
 
 def reassignC(fA: float, fB: float, fC: float, A: float, B: float,C: float) -> float:

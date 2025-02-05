@@ -7,14 +7,28 @@ import src.newtonMethod as newt
  
 
 def test_calc_resid():
-    known = np.array([2,1])
-    found = newt.calc_resid([1,2])
+
+    def fnR(x):
+        R[0] = x[0]**2 - 1 + x[1]
+        R[1] = x[1]**3 - 1
+        return fnR
+
+    
+    known = np.array([6],[26])
+    found = newt.calc_resid(np.array([[2],[3]]),fnR)
     assert (known==found).all()
 
 def test_calc_jacobian():
-    known = 64
-    found = newt.calc_jacobian(4)
-    assert known == found
+    def fnJ(x):
+        J[0,0] = 2*x[0]
+        J[0,1] = 0
+        J[1,0] = 1
+        J[1,1] = 3*x[1]**2
+        return fnJ
+
+    known = np.array([4,0],[1,27])
+    found = newt.calc_jacob(np.array([[2],[3]]),fnJ)
+    assert (known==found).all()
 
 def test_maxIterReached():
     known = "Exiting"

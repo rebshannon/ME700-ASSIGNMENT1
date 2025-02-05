@@ -6,9 +6,9 @@
 
 
 # define residual vector 
-def R(x):
-    R[0] = x**2 - 2
-    R[1] = x**3 - 2
+def fnR(x):
+    R[0] = x**2 - 1
+    R[1] = x**3 - 1
     return R
 
 # define jacobian 

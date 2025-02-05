@@ -1,5 +1,5 @@
 import src.bisectionMethodFns as testFns
-
+import pytest 
 
 def test_A_lessThan_B():
     known = "PASS: A is less than B"
@@ -28,10 +28,12 @@ def test_A_B_signCheck():
 def test_midpoint_A_B():
     assert testFns.midpoint_A_B(2,4) == 3
 
-# def test_checkTol():
-#     known = "Solution found"
-#     found = testFns.checkTol(1,2,10,4)
-#     assert known == found
+def test_checkTol():
+    with pytest.raises(SystemExit):
+        testFns.checkTol(1,2,10,4)
+    known = 10
+    found = testFns.checkTol(5,2,10,4)
+    assert known == found
 
 def test_reassignC():
     assert testFns.reassignC(10, -10, 5, 0, 5, 3) == (3, 5)

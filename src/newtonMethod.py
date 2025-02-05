@@ -15,13 +15,39 @@ nIter = 0
 
 # FUNCTIONS
 
-def calc_resid(x):
-    R = ([2,1])
+def calc_resid(x, fnR:callable):
+    # check input size
+    nRows = np.size(x)
+
+    # initialize R
+    R = np.zeros(nRows)
+    np.matrix(R.reshape(nRows,1))
+
+    # calc R
+    for rows in range(0,nRows):
+        R[rows] = fnR(x)
+        
+    # return value
+    np.matrix(R.reshape(nRows,nCols))
     return R
 
-def calc_jacobian(x:float) -> float:
-    val = 3*x**2 +4*x
-    return val
+def calc_jacobian(x,fnJ: callable):
+    # check input size
+    nRows = np.size(x,0)
+    nCols = np.size(x,1)
+
+    # initialize J
+    J = np.zeros(nRows*nCols)
+    np.matrix(J.reshape(nRows,nCOls))
+
+    # calc J
+    for rows in range(0,nRows):
+        for cols in range(0,nCols):
+            J[rows, cols] = fnJ(x)
+        
+    # return value
+    np.matrix(J.reshape(nRows,nCols))
+    return J
 
 def maxIterReached(maxIter: float, nIter: float):
     """Check if the naximum number of iterations has been reached and exit"""
@@ -41,30 +67,33 @@ def nIterMaxCheck(nIterMax: float):
         exit()
     else: return "PASS: nIterMax is positive whole number"
 
+
+    # SIZE R = SIZE X
+
 # CHECK INPUTS
 # nIterMaxCheck(maxIter)
 
 # # FIRST LOOP
-# # calc R(x0) and J(0)
+# # calc R(x0) and J(x0)
 # R = calc_resid(x)
 # J = calc_jacobian(x)
 
 # # calc inverse of Jacobian
-# dJ = 1/J
-# print(dJ)
+# dJ = np.linalg.inv(J)
 
 # # ACTUAL LOOP
 
-# while np.abs(R) > tol:
-#     x = x - dJ*R 
+# while (R>tol).any():
+#     x = x - dJ@R
 
-#     # calc R(x0) and J(0)
+#     # calc R(xi) and J(xi)
 #     R = calc_resid(x)
 #     J = calc_jacobian(x)
 
 #     # calc inverse of Jacobian
-#     dJ = 1/J
+#     dJ = np.linalg.inv(J)
 
+#     # increment
 #     nIter =+ 1
 #     maxIterReached(maxIter,nIter)
 
