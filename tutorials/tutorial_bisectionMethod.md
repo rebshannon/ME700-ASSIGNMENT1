@@ -23,9 +23,9 @@ Set up the conda environment and test that the code is functioning.
     ```bash
     pip install -e .
     ```
-5. Test the code with pytest. This command returns code coverage for all files in the directory. Coverage for *warmUp/fnAssignment1.py* should be 100% and all tests should pass.  
+5. Test the code with pytest. This command returns code coverage for all files in the directory. Coverage for *src/bisectionMethodFns.py* should be 100% and all tests should pass.  
     ```bash
-    pytest -v --cov=warmUp  --cov-report term-missing
+    pytest -v --cov=src  --cov-report term-missing
     ```
 
 ## Running Examples

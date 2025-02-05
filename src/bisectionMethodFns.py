@@ -3,7 +3,8 @@
 # Rebecca Shannon 1/25/25
 
 import numpy as np
-import tutorials.bisectionMethod_exampleSolutions as exSoln
+import tutorials.tutSoln_bisectionMethod as exSoln
+from pathlib import Path
 
 def A_lessThan_B(A: float, B: float):
     """Given A and B, check if A < B"""

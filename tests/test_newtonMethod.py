@@ -2,14 +2,14 @@
 # 2/4/2025
 # tests for Newton's Method code, ME700 assignment 1 part 1
 
-import numpy as numpy
+import numpy as np
 import src.newtonMethod as newt
  
 
 def test_calc_resid():
-    known = np.array([5,18])
+    known = np.array([2,1])
     found = newt.calc_resid([1,2])
-    assert known == found
+    assert (known==found).all()
 
 def test_calc_jacobian():
     known = 64
