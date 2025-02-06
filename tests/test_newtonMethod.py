@@ -6,17 +6,47 @@ import numpy as np
 import src.newtonMethod as newt
  
 
-# def test_calc_resid():
+def test_calc_resid():
 
-#     def fnR(x):
-#         R[0] = x[0]**2 - 1 + x[1]
-#         R[1] = x[1]**3 - 1
-#         return fnR
+    def fnR0(x,y,z=0):
+        fnR0 = x**2 - 1 + y
+        return fnR0
 
+    def fnR1(x,y,z=0):
+        fnR1 = y**3 -1
+        return fnR1
+
+    fnR = [fnR0,fnR1]
     
-#     known = np.array([6],[26])
-#     found = newt.calc_resid(np.array([[2],[3]]),fnR)
+    known = np.array([[6, 26]])
+    found = newt.calc_resid(np.array([[2],[3],[0]]),fnR)
+    assert (known==found).all()
+    
+# def test_calc_jacob():
+
+#     def fnJ00(x,y,z=0):
+#         fnJ00 = 2*x
+#         return fnJ00
+
+#     def fnJ10(x,y,z=0):
+#         fnJ10 = 0
+#         return fnJ10
+
+#     def fnJ01(x,y,z=0):
+#         fnJ = 1
+#         return fnJ10
+
+#     def fnJ11(x,y,z=0):
+#         fnJ2 = 3*y**2
+#         return fnJ11
+
+#     fnJ0 = [fnJ00,fnJ01]
+#     fnJ1 = [fnJ10, fnJ11]
+    
+#     known = np.array([[4, 0],[1,27]])
+#     found = newt.calc_jacob(np.array([[2],[3],[0]]),fnJ)
 #     assert (known==found).all()
+
 
 # def test_calc_jacobian():
 #     def fnJ(x):
