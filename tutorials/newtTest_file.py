@@ -1,5 +1,5 @@
 import numpy as np
-import src.newtonMethod as newt
+import newtonMethod as newt
 
 #old loop
     # tol = 1e-9
