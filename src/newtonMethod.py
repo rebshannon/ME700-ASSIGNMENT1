@@ -5,16 +5,6 @@
 import numpy as np
 import scipy as sp
 
-# USER INPUTS
-
-x = np.array([1,2])
-tol = 1e-9
-maxIter = 1
-nIter = 0
-
-
-# FUNCTIONS
-
 def calc_resid(x, fnR:callable):
     # check input size
     nRows = np.size(fnR)
@@ -22,104 +12,118 @@ def calc_resid(x, fnR:callable):
 
     # initialize R
     R = np.zeros(nRows)
-    np.matrix(R.reshape(nRows,1))
+    R = np.array(R.reshape(nRows,1))
 
-    if np.size(x) == 1:
-        x[1] = 0
-    elif np.size(x) == 2:
-        x[1] = 0
-        x[2] = 0
+    width = 3 - np.size(x)
+    x = np.pad(x,[(0,width),(0,0)],'constant',constant_values=0)
 
     iter = 0
     for func in fnR:
         R[iter] = func(x[0],x[1],x[2])
-        iter =+ 1
+        iter += 1
     
     # return value
-    np.matrix(R.reshape(nRows,nCols))
+    R = np.array(R.reshape(nRows,nCols))
     return R
 
-def calc_jacob(x,fnJ0: callable, fnJ1: callable, fnJ2: callable):
+def calc_jacob(x, fnJ: callable):
     # check input size
     nRows = np.size(fnJ,0)
     nCols = np.size(fnJ,1)
 
-    # initialize R
+    # # initialize R
     J = np.zeros(nRows*nCols)
-    np.matrix(J.reshape(nRows,nCols))
+    J = np.array(J.reshape(nRows,nCols))
 
-    if np.size(x) == 1:
-        x[1] = 0
-    elif np.size(x) == 2:
-        x[1] = 0
-        x[2] = 0
+    # pad x array
+    width = 3 - np.size(x)
+    x = np.pad(x,[(0,width),(0,0)],'constant',constant_values=0)
 
     iter = 0
     rowJ = np.zeros(nCols)
     for rows in range(nRows):
-         for cols in range(nCols):
-             rowJ[cols] = fnJ[rows][cols](x[0],x[1],x[2])
-             iter =+ 1
-
-    # iter = 0
-    # for func in fnJ:
-    #     J[iter] = func(x[0],x[1],x[2])
-    #     iter =+ 1
+          for cols in range(nCols):
+                J[rows,cols] = fnJ[rows][cols](x[0],x[1],x[2])
+                #   testFn = fnJ[rows][cols]
+                #Jind = fnJ[rows][cols](x[0],x[1],x[2])
+                #print(Jind)
+                #J.item(iter) = Jind
+            #   J[rows,cols] = Jind
+                iter = iter + 1
     
     # return value
-    np.matrix(J.reshape(nRows,nCols))
+    J = np.array(J.reshape(nRows,nCols))
     return J
 
-
-def maxIterReached(maxIter: float, nIter: float):
+def maxIterReached(maxIter: float, nIter: float, x: float):
     """Check if the naximum number of iterations has been reached and exit"""
     if nIter == maxIter:
         print("ERROR: Max number of iteractions exceeded.")
-        #print("Last value found: C = ",C)
+        print("Last value found: x = ",x)
         print("Increase nIterMax or decrease tol")
-        return "Exiting"
+        #return "Exiting"
         exit()
+    return x
 
 def nIterMaxCheck(nIterMax: float):
     """Check if nIterMax is a postivie whole number, exits is false"""
     if nIterMax <= 0 or nIterMax.is_integer()==False:
         print("FAIL: maximum number of iterations must be a postivie whole number.")
         print("Change nIterMax to try again.")
-        return "Exiting"
+        #return "Exiting"
         exit()
     else: return "PASS: nIterMax is positive whole number"
 
 
     # SIZE R = SIZE X
 
-# CHECK INPUTS
-# nIterMaxCheck(maxIter)
+def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
 
-# # FIRST LOOP
-# # calc R(x0) and J(x0)
-# R = calc_resid(x)
-# J = calc_jacobian(x)
+    # FIRST LOOP
+    # find initial R(x0) and J(x0)
+    # check for matrix or algebra
+    if np.size(fnR) > 1:
+        R = calc_resid(x,fnR)
+        J = calc_jacob(x, fnJ)
+        invJ = np.linalg.inv(J)
+    else:
+        R = fnR(x)
+        J = fnJ(x)
+        invJ = 1/J
+        print(R)
+        
+    # # ACTUAL LOOP
 
-# # calc inverse of Jacobian
-# dJ = np.linalg.inv(J)
+    while (np.abs(R)>tol).any():
 
-# # ACTUAL LOOP
+        if np.size(fnR) > 1:
+            x = x - invJ @ R
+            R = calc_resid(x,fnR)
+            J = calc_jacob(x, fnJ)
+            invJ = np.linalg.inv(J)
+        else:
+            x = x - invJ * R
+            R = fnR(x)
+            J = fnJ(x)
+            invJ = 1/J
+        print(R)
+        print(x)
+    print("FINAL")
+    print(R)
+    print(x)
+    return x,R
 
-# while (R>tol).any():
-#     x = x - dJ@R
+    
+    
 
-#     # calc R(xi) and J(xi)
-#     R = calc_resid(x)
-#     J = calc_jacobian(x)
-
-#     # calc inverse of Jacobian
-#     dJ = np.linalg.inv(J)
-
-#     # increment
-#     nIter =+ 1
-#     maxIterReached(maxIter,nIter)
+# # increment
+# nIter += 1
+# print(nIter)
+# maxIterReached(maxIter,nIter,x)
 
 # print(x)
 # print(R)
+# print(J)
+# print(invJ)
 
 
