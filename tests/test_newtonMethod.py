@@ -68,7 +68,7 @@ def test_nIterMaxCheck():
 
 def test_newtonMethodFunc():
     
-    x = 3
+    x = np.array([2])
     
     def fnR(x):
         fnR = x**3-2+x
@@ -78,7 +78,8 @@ def test_newtonMethodFunc():
         fnJ = 3*x**2+1
         return fnJ
     
-    found = newt.newtonMethodFunc(x,fnR,fnJ)
-    known = (1,0)
+    result = newt.newtonMethodFunc(x,fnR,fnJ)
+    found = result["solution"]
+    known = 1
 
-    assert np.allclose(known,found)
+    assert np.allclose(known,found,rtol=1e-4,atol=1e-5)

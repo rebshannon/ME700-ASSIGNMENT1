@@ -62,10 +62,6 @@ def fnJ(x):
     fnJ = 3*x**2+1
     return fnJ
 
-# CHECK INPUTS
-
-newt.nIterMaxCheck(maxIter)
-
 # CALL FUNCTION
 C = newt.newtonMethodFunc(x,fnR,fnJ,tol,maxIter)
 print(C)

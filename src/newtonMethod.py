@@ -16,11 +16,11 @@ def calc_resid(x, fnR:callable):
 
     width = 3 - np.size(x)
     x = np.pad(x,[(0,width),(0,0)],'constant',constant_values=0)
-
-    iter = 0
+    
+    nIter = 0
     for func in fnR:
-        R[iter] = func(x[0],x[1],x[2])
-        iter += 1
+        R[nIter] = func(x[0],x[1],x[2])
+        nIter += 1
     
     # return value
     R = np.array(R.reshape(nRows,nCols))
@@ -39,7 +39,7 @@ def calc_jacob(x, fnJ: callable):
     width = 3 - np.size(x)
     x = np.pad(x,[(0,width),(0,0)],'constant',constant_values=0)
 
-    iter = 0
+    nIter = 0
     rowJ = np.zeros(nCols)
     for rows in range(nRows):
           for cols in range(nCols):
@@ -47,9 +47,9 @@ def calc_jacob(x, fnJ: callable):
                 #   testFn = fnJ[rows][cols]
                 #Jind = fnJ[rows][cols](x[0],x[1],x[2])
                 #print(Jind)
-                #J.item(iter) = Jind
+                #J.item(nIter) = Jind
             #   J[rows,cols] = Jind
-                iter = iter + 1
+                nIter = nIter + 1
     
     # return value
     J = np.array(J.reshape(nRows,nCols))
@@ -79,6 +79,9 @@ def nIterMaxCheck(nIterMax: float):
 
 def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
 
+    # CHECK USER INPUTS
+    nIterMaxCheck(maxIter)
+
     # FIRST LOOP
     # find initial R(x0) and J(x0)
     # check for matrix or algebra
@@ -86,14 +89,15 @@ def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
         R = calc_resid(x,fnR)
         J = calc_jacob(x, fnJ)
         invJ = np.linalg.inv(J)
+
     else:
         R = fnR(x)
         J = fnJ(x)
         invJ = 1/J
-        print(R)
-        
+            
     # # ACTUAL LOOP
 
+    nIter = 1
     while (np.abs(R)>tol).any():
 
         if np.size(fnR) > 1:
@@ -101,17 +105,20 @@ def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
             R = calc_resid(x,fnR)
             J = calc_jacob(x, fnJ)
             invJ = np.linalg.inv(J)
+
         else:
             x = x - invJ * R
             R = fnR(x)
             J = fnJ(x)
             invJ = 1/J
-        print(R)
-        print(x)
-    print("FINAL")
-    print(R)
-    print(x)
-    return x,R
+            
+        nIter = nIter + 1
+        maxIterReached(maxIter,nIter,x)
+
+    result = {"solution" : x,
+               "nIter" : nIter,
+                "Rfinal" : R}
+    return result
 
     
     
