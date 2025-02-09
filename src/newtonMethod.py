@@ -95,7 +95,7 @@ def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
         J = fnJ(x)
         invJ = 1/J
             
-    # # ACTUAL LOOP
+    # ACTUAL LOOP
 
     nIter = 1
     while (np.abs(R)>tol).any():
@@ -119,18 +119,3 @@ def newtonMethodFunc(x, fnR: callable, fnJ: callable, tol=1e-9, maxIter=1000):
                "nIter" : nIter,
                 "Rfinal" : R}
     return result
-
-    
-    
-
-# # increment
-# nIter += 1
-# print(nIter)
-# maxIterReached(maxIter,nIter,x)
-
-# print(x)
-# print(R)
-# print(J)
-# print(invJ)
-
-

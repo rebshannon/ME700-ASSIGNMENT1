@@ -61,7 +61,6 @@ def test_nIterMaxCheck():
     with pytest.raises(SystemExit):
         newt.nIterMaxCheck(-1)
     
-    
     known = "PASS: nIterMax is positive whole number"
     found = newt.nIterMaxCheck(10)
     assert known == found
