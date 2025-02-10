@@ -1,11 +1,12 @@
 # ME700 Assignment 1
 ## Table of Contents
-* [Set Up] (#setup)
+
+* [Set Up](#setup)
 * [Bisection Method](#bim)
 * [Newton's Method](#newt)
 
 ## Set Up <a name=setup></a>
-Set up the conda environment and test that the code is functioning.  
+Set up the conda environment and test that the code is functioning. Note: The environemnt name for all parts of Assignemnt 1 refers to the bisection method.  
 
 1. Create a new conda environment and activate it.  
     ```bash 
@@ -62,9 +63,9 @@ Uses the Newton-Rhapsom method to find the root of a provided function(s) based 
 
 ### Variables
 
-`x`: initial guess, vector must be the same size as `R`  
-`fnR`: function(s) to be solved, each row is a different function, number of variables must equal number of functions  
-`fnJ`: Jacobian matrix, deriva, must be a square matrix with dimention equal to the number of rows in `fnR`  
+`x`: initial guess, 1D array must be the same size as `R`  
+`fnR`: 1D array, function(s) to be solved, each row is a different function, number of variables must equal number of functions  
+`fnJ`: Jacobian matrix (derivatives), must be a square matrix with dimension equal to the number of rows in `fnR`  
 `nIterMax`: maximum number of iterations for the solver  
 `tol`: desired tolerance level  
 
@@ -73,3 +74,21 @@ Uses the Newton-Rhapsom method to find the root of a provided function(s) based 
 *src/newtonMethod.py*: holds Newton method function along with other functions necessary for solving
 *tests/test_newtonMethod.py*: tests for *newtonMethod.py*
 *tutorials/tut_newtonMethod.ipynb*: Jupyter notebook with example problems and solutions
+
+### Notes
+
+Code coverage is currently not $100\%$; the lines that are not tested check if there is more than one equation in the system being solved. These lines do work because the solver works for both Example 1 and Example 2, which switches between a one equation system and a two equation system. There just isn't a pytest test included yet.
+
+### Running the Code
+
+The following steps can be completed to launch a Jupyter notebook containing the example problems.
+
+```bash
+pip install jupyter
+```
+```bash
+cd tutorials/
+```
+```bash
+jupyter notebook tut_newtonMethod.ipynb
+```
