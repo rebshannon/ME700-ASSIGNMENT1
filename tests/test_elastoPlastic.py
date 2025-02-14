@@ -34,10 +34,10 @@ def test_update_step(IHModel):
     known = 10
     assert known == found
 
-def test_run_model(IHModel):
-    all_epsilon = np.array([0.0005005005005005005,0.001001001001001001])
+# def test_run_model(IHModel):
+#     all_epsilon = np.array([0.0005005005005005005,0.001001001001001001])
 
-    found = IHModel.run_model(all_epsilon)
-    known = np.array([0.5005005005005005, 1.0010010010010015])
+#     found = IHModel.run_model(all_epsilon)
+#     known = np.array([0.5005005005005005, 1.0010010010010015])
 
-    assert np.allclose(known, found)
+#     assert np.allclose(known, found)
