@@ -31,5 +31,13 @@ def test_check_elastic_or_yielding(IHModel):
 
 def test_update_step(IHModel):
     found = IHModel.update_step(delta_epsilon = 0.02)
-    known = 10, 15, 0.005
+    known = 10
     assert known == found
+
+def test_run_model(IHModel):
+    all_epsilon = np.array([0.0005005005005005005,0.001001001001001001])
+
+    found = IHModel.run_model(all_epsilon)
+    known = np.array([0.5005005005005005, 1.0010010010010015])
+
+    assert np.allclose(known, found)

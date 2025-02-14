@@ -16,8 +16,26 @@ class ElastoPlastic:
         Y_n = self.Y_o + self.H * self.epsilon_p_n
         return Y_n
 
-    
-    
+    def run_model(self, epsilon_step):
+        stress_list = []
+        strain_list = []
+        for step, ep_n in enumerate(epsilon_step):
+
+            # find delta ep_n
+            if step == 0:
+                stress_list.append(self.sigma_n)
+                continue
+
+            delta_ep_n = ep_n - epsilon_step[step-1]
+            if np.isclose(delta_ep_n,0):
+                stress_list.append(self.sigma_n)
+                continue
+
+            self.update_step(delta_ep_n)  
+            stress_list.append(self.sigma_n)
+            strain_list.append(self.epsilon_p_n)
+        return stress_list, strain_list
+   
 class IsotropicHardening(ElastoPlastic):
 
     def calc_phi_trial(self,sigma_trial,Y_n):
@@ -53,29 +71,6 @@ class IsotropicHardening(ElastoPlastic):
 
         return Y_n
 
-    def run_model(self, epsilon_step):
-        stress_list = []
-        strain_list = []
-        for step, ep_n in enumerate(epsilon_step):
-
-            # find delta ep_n
-            if step == 0:
-                stress_list.append(self.sigma_n)
-                continue
-
-            delta_ep_n = ep_n - epsilon_step[step-1]
-            if np.isclose(delta_ep_n,0):
-                stress_list.append(self.sigma_n)
-                continue
-
-            self.update_step(delta_ep_n)  
-            stress_list.append(self.sigma_n)
-            strain_list.append(self.epsilon_p_n)
-        return stress_list, strain_list
-
-
-
-
 class kinemticHardening(ElastoPlastic):
 
     def __init__(self, E, H, Y_o):
@@ -103,22 +98,4 @@ class kinemticHardening(ElastoPlastic):
 
         self.check_elastic_or_yielding(phi_trial,sigma_trial,alpha_trial,eta_trial)
         
-    def run_model(self, epsilon_step):
-        stress_list = []
-        strain_list = []
-        for step, ep_n in enumerate(epsilon_step):
 
-            # find delta ep_n
-            if step == 0:
-                stress_list.append(self.sigma_n)
-                continue
-
-            delta_ep_n = ep_n - epsilon_step[step-1]
-            if np.isclose(delta_ep_n,0):
-                stress_list.append(self.sigma_n)
-                continue
-
-            self.update_step(delta_ep_n)  
-            stress_list.append(self.sigma_n)
-            strain_list.append(self.epsilon_p_n)
-        return stress_list, strain_list 
