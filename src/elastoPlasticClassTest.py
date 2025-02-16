@@ -21,11 +21,14 @@ class ElastoPlastic:
         strain_list = []
         for step, ep_n in enumerate(epsilon_step):
 
-            # find delta ep_n
+            # no change in stress at first step
             if step == 0:
                 stress_list.append(self.sigma_n)
                 continue
 
+            # find delta epsilon
+            # skip if epsilon value was repeated 
+            # (at edges of piecewise)
             delta_ep_n = ep_n - epsilon_step[step-1]
             if np.isclose(delta_ep_n,0):
                 stress_list.append(self.sigma_n)
@@ -34,7 +37,8 @@ class ElastoPlastic:
             self.update_step(delta_ep_n)  
             stress_list.append(self.sigma_n)
             strain_list.append(self.epsilon_p_n)
-        return stress_list, strain_list
+
+        return stress_list
    
 class IsotropicHardening(ElastoPlastic):
 
@@ -50,8 +54,7 @@ class IsotropicHardening(ElastoPlastic):
             delta_epsilon = phi_trial / (self.E + self.H)
             self.sigma_n = sigma_trial - np.sign(sigma_trial) * self.E * delta_epsilon
             self.epsilon_p_n = self.epsilon_p_n + delta_epsilon
-        return self.sigma_n, self.epsilon_p_n
-
+        
     def update_step(self,delta_epsilon):
         #function to update attribute of the class based on input epsilon
      
@@ -62,14 +65,13 @@ class IsotropicHardening(ElastoPlastic):
         delta_Sigma_trial = self.E * delta_epsilon
         sigma_trial = self.sigma_n + delta_Sigma_trial
 
-        # find phi trial and check state
+        # find phi trial
         phi_trial = self.calc_phi_trial(sigma_trial,Y_n)
-        self.sigma_n, self.epsilon_p_n = self.check_elastic_or_yielding(phi_trial,sigma_trial)
-        
-        # update sigma
-        #self.sigma_n = sigma_trial - np.sign(sigma_trial) * self.E * delta_epsilon
 
-        return Y_n
+        # check elastic or yielding and update values
+        self.check_elastic_or_yielding(phi_trial,sigma_trial)
+ 
+ #       return Y_n
 
 class kinemticHardening(ElastoPlastic):
 
@@ -96,6 +98,7 @@ class kinemticHardening(ElastoPlastic):
         eta_trial = sigma_trial - alpha_trial
         phi_trial = np.abs(eta_trial) - self.Y_o
 
+        # check elastic or yielding and update values
         self.check_elastic_or_yielding(phi_trial,sigma_trial,alpha_trial,eta_trial)
         
 

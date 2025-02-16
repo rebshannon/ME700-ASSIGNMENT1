@@ -82,3 +82,45 @@ def test_newtonMethodFunc():
     known = 1
 
     assert np.allclose(known,found,rtol=1e-4,atol=1e-5)
+
+def test_newtonMethodFunc_2D():
+    
+    x = np.array([[2], [4]])    # initial guess
+    tol = 1e-9                  # tolerance
+    maxIter = 1000              # max number of iterations
+
+    # function of interest (fnR) and its derivative (fnJ)
+    def fnR0(x,y,z=0):
+        fnR0 = x**3 + y - 2
+        return fnR0
+
+    def fnR1(x,y,z=0):
+        fnR1 = -x + y**3 + 3
+        return fnR1
+
+    fnR = [fnR0, fnR1]
+
+    def fnJ00(x,y,z=0):
+        fnJ00 = 3*x**2 
+        return fnJ00
+
+    def fnJ10(x,y,z=0):
+        fnJ10 = 1
+        return fnJ10
+
+    def fnJ01(x,y,z=0):
+        fnJ01 = -1
+        return fnJ01
+
+    def fnJ11(x,y,z=0):
+        fnJ11 = 3*y**2
+        return fnJ11
+
+    fnJ = [[fnJ00, fnJ01], [fnJ10, fnJ11]]
+
+    
+    result = newt.newtonMethodFunc(x,fnR,fnJ)
+    found = result["solution"]
+    known = np.array([[1.46639344],[-1.1532005]])
+
+    assert np.allclose(known,found,rtol=1e-4,atol=1e-5)
