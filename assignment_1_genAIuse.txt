@@ -1,3 +1,1 @@
-No AI tools were used to complete this assignment.
-
-The AI tool Deep Seek was used on Part 2 to help with debugging the source and test codes.
+Deep Seek was used on Part 2 to help with debugging the source and test codes - specifically related to the syntax needed for classes in Python. 
