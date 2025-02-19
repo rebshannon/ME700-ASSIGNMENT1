@@ -1,6 +1,6 @@
 import numpy as np
 from elastoPlasticClasses import IsotropicHardening as IH
-from elastoPlasticClasses import kinemticHardening as KH
+from elastoPlasticClasses import kinematicHardening as KH
 import pytest
 
 @pytest.fixture
