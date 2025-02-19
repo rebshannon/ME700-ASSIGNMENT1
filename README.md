@@ -33,12 +33,12 @@ Set up the conda environment and test that the code is functioning. Note: The en
     ```bash
     pip install --upgrade pip setuptools wheel
     ```
-3. Navigate to the warmUp directory.  
+3. Make sure you are in the ME700-Assignment1 directory.  
 4. Install an editable version of the code. Note that the *pyproject.toml* file is required for this.  
     ```bash
     pip install -e .
     ```
-5. Test the code with pytest. This command returns code coverage for all files in the directory. Coverage for *src/bisectionMethodFns.py* should be 100% and all tests should pass.  
+5. Test the code with pytest. This command returns code coverage for all files in the directory. Coverage for each of the solvers should be 100% and all tests should pass.  
     ```bash
     pytest -v --cov=src  --cov-report term-missing
     ```
